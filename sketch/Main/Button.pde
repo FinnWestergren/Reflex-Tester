@@ -1,25 +1,43 @@
+import java.awt.Point;
 abstract class Button implements Clickable, Drawable {
   
-  float x, y, w, h;
-  boolean isEnabled;
+  private String text;
+  private float left, top, w, h, cX, cY;
+  private boolean isEnabled = true;
+  private boolean isDepressed = false;
   
-  public Button(float x, float y, float w, float h) {
-    this.x = x;
-    this.y = y;
+  public Button(float x, float y, String text) {
+    init(x, y, 100, 40, text);
+  }
+  
+  public Button(float x, float y, float w, float h, String text) {
+    init(x, y, w, h, text);
+  }
+  
+  private void init(float x, float y, float w, float h, String text) {
+    this.cX = x;
+    this.cY = y;
+    this.left = x - (0.5*w);
+    this.top = y - (0.5*h);
     this.w = w;
     this.h = h;
-    isEnabled = true;
+    this.text = text;
   }
   
   void draw() {
-    pushMatrix();
-    translate(x - (w * 0.5), y - (h * 0.5));
-    rect(0,0,w,h);
-    popMatrix();
+    fill(isDepressed || !isEnabled ? 150 : 0);
+    rect(left, top, w, h);
+    textAlign(CENTER, CENTER);
+    fill(255);
+    text(text, cX, cY);
   }
   
   boolean getIsEnabled() {
     return isEnabled;
+  }
+  
+  void setIsEnabled(boolean val) {
+    isEnabled = val;
   }
   
   void disable() {
@@ -30,12 +48,20 @@ abstract class Button implements Clickable, Drawable {
     isEnabled = true;
   }
   
-  
   abstract void onClick();
   
+  void react() {
+    isDepressed = true;
+  }
+  
+  void stopReact() {
+    isDepressed = false;
+  }
+  
   boolean withinBounds(float x, float y) {
-    boolean satX = x > this.x && x < this.x + this.w;
-    boolean satY = y > this.y && x < this.y + this.h;
+    println(x, y, this.left, this.top);
+    boolean satX = x > this.left && x < this.left + this.w;
+    boolean satY = y > this.top && y < this.top + this.h;
     return satX && satY;
   }
 }
