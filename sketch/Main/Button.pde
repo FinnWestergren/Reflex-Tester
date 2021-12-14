@@ -1,13 +1,22 @@
-import java.awt.Point;
 abstract class Button implements Clickable, Drawable {
   
   private String text;
   private float left, top, w, h, cX, cY;
   private boolean isEnabled = true;
   private boolean isDepressed = false;
+  private int hash;
+  
+  
+  public Button(float x, float y) {
+    init(x, y, 100, 40, null);
+  }
   
   public Button(float x, float y, String text) {
     init(x, y, 100, 40, text);
+  }
+  
+  public Button(float x, float y, float w, float h) {
+    init(x, y, w, h, null);
   }
   
   public Button(float x, float y, float w, float h, String text) {
@@ -22,6 +31,7 @@ abstract class Button implements Clickable, Drawable {
     this.w = w;
     this.h = h;
     this.text = text;
+    this.hash = (int)(System.currentTimeMillis() % Integer.MAX_VALUE);
   }
   
   void draw() {
@@ -29,7 +39,9 @@ abstract class Button implements Clickable, Drawable {
     rect(left, top, w, h);
     textAlign(CENTER, CENTER);
     fill(255);
-    text(text, cX, cY);
+    if(text != null){
+      text(text, cX, cY);
+    }
   }
   
   boolean getIsEnabled() {
@@ -59,9 +71,12 @@ abstract class Button implements Clickable, Drawable {
   }
   
   boolean withinBounds(float x, float y) {
-    println(x, y, this.left, this.top);
     boolean satX = x > this.left && x < this.left + this.w;
     boolean satY = y > this.top && y < this.top + this.h;
     return satX && satY;
+  }
+  
+  int getHash() {
+    return hash;
   }
 }

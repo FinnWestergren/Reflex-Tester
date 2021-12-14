@@ -6,4 +6,5 @@ interface Clickable {
   public void onClick();
   public void react();
   public void stopReact();
+  public int getHash();
 }
