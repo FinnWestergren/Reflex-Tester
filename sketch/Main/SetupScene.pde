@@ -6,7 +6,7 @@ public abstract class SetupScene implements Scene{
   public SetupScene(String setupMessage) {
     this.setupMessage = setupMessage;
     readyButton = new Button(width/2, height * 0.66f, "Ready"){
-      void onClick() {
+      void onClickAppendage() {
         endScene();
         clickManager.detachListener(this);
       }

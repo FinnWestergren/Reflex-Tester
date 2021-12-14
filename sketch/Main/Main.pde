@@ -12,11 +12,7 @@ void setup() {
   //fullScreen();
   size(600,600);
   clickManager = new ClickManager();
-  currentScene = new SetupScene("Click the squares as soon as they appear"){
-    void endScene(){
-      goToRunMode();
-    }
-  };
+  goToSetupMode();
 }
 
 void draw(){
@@ -43,13 +39,26 @@ void refreshBackground() {
   rect(-1,-1, width + 2, height + 2);
 }
 
-void goToRunMode(){
-  currentScene = new RunScene(){
+void goToSetupMode(){
+  currentScene = new SetupScene("Click the squares as soon as they appear"){
     void endScene(){
-      goToResultsMode();
+      goToRunMode();
     }
   };
 }
 
-void goToResultsMode(){
+void goToRunMode(){
+  currentScene = new RunScene(){
+    void endScene() {
+      goToResultsMode(this.getResults());
+    }
+  };
+}
+
+void goToResultsMode(ArrayList<Integer> list){
+  currentScene = new ResultsScene(list){
+    void endScene(){
+      goToSetupMode();
+    }
+  };
 }

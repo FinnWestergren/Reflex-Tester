@@ -44,8 +44,8 @@ abstract class Button implements Clickable, Drawable {
     }
   }
   
-  boolean getIsEnabled() {
-    return isEnabled;
+  boolean isEnabled() {
+    return this.isEnabled;
   }
   
   void setIsEnabled(boolean val) {
@@ -60,7 +60,12 @@ abstract class Button implements Clickable, Drawable {
     isEnabled = true;
   }
   
-  abstract void onClick();
+  void onClick() {
+    println("click");
+    onClickAppendage();
+  }
+  
+  abstract void onClickAppendage();
   
   void react() {
     isDepressed = true;
@@ -78,5 +83,9 @@ abstract class Button implements Clickable, Drawable {
   
   int getHash() {
     return hash;
+  }
+  
+  int compareTo(Clickable c){
+    return c.getHash() - this.getHash(); 
   }
 }
