@@ -3,6 +3,7 @@ import java.util.List;
 public abstract class ResultsScene implements Scene {
 
   private Button tryAgainButton;
+  private Button quitButton;
   private ArrayList<Integer> results;
   private double resultsAvg;
   private float top;
@@ -13,32 +14,43 @@ public abstract class ResultsScene implements Scene {
     this.bottom =  height * 0.9;
     this.results = results;
     this.resultsAvg = calculateAverage(results);
-    tryAgainButton = new Button(width/2, bottom, "Try Again") {
+    
+    tryAgainButton = new Button(width/3, bottom, "Try Again") {
       void onClickAppendage() {
         endScene();
         clickManager.detachListener(this);
       }
     };
+    quitButton = new Button(2 * width/3, bottom, "Quit") {
+      void onClickAppendage() {
+        exit();
+      }
+    };
+    
     clickManager.attachListener(tryAgainButton);
+    clickManager.attachListener(quitButton);
   }
 
   public void draw() {
     textAlign(CENTER);
     fill(0);
     text("Results", width/2, top);
-    results.forEach(r -> drawResult(r));
-    drawRow(resultsAvg, results.size() + 1, "avg");
+    drawResults();
     tryAgainButton.draw();
+    quitButton.draw();
+  }
+  
+  void drawResults(){
+    for (int i = 0; i < results.size(); i++) {
+      drawRow(results.get(i), i, "test " + (i + 1));
+    }
+    drawRow(resultsAvg, results.size(), "avg");
   }
 
-  void drawResult(int r) {
-    int index = results.indexOf(r) + 1;
-    drawRow(r, index, "test " + index);
-  }
 
   void drawRow(double val, int index, String prefix) {
     String rowText = prefix + ": " + val + "ms";
-    int offset = index * height/20;
+    int offset = (index + 1) * height/20;
     text(rowText, width/2, top + offset);
   }
 

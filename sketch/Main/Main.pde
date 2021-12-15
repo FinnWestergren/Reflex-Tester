@@ -9,8 +9,7 @@ public static ClickManager clickManager;
 private Scene currentScene;
 
 void setup() {
-  //fullScreen();
-  size(600,600);
+  fullScreen();
   clickManager = new ClickManager();
   goToSetupMode();
 }

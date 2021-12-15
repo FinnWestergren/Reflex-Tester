@@ -3,10 +3,11 @@ import java.util.TimerTask;
 
 public abstract class RunScene implements Scene {
   
-  private final int _minTime = 1000;
-  private final int _maxTime = 6000;
+  private final int _minTime = 10;
+  private final int _maxTime = 60;
   private final int _maxRuns = 10;
-  private final int _buttonSize = 200;
+  private PImage logo;
+  
   
   private Timer timer;
   private Button nextButton = null; 
@@ -17,6 +18,7 @@ public abstract class RunScene implements Scene {
   
   public RunScene() {
     runCounter = 0;
+    logo = loadImage("logo.jpg");
     timer = new Timer();
     scheduleNextSquare();
   }
@@ -50,9 +52,9 @@ public abstract class RunScene implements Scene {
   }
   
   void createNextButton() {
-    int x = random(_buttonSize, width - _buttonSize * 2);
-    int y = random(_buttonSize, height - _buttonSize * 2);
-    nextButton = new Button(x,y,_buttonSize,_buttonSize){
+    int x = random(logo.width, width - logo.width * 2);
+    int y = random(logo.height, height - logo.height * 2);
+    nextButton = new ImageButton(x,y,logo){
       void onClickAppendage () {
         cycle(); //<>//
       }

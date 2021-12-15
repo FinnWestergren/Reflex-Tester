@@ -1,7 +1,7 @@
 abstract class Button implements Clickable, Drawable {
   
   private String text;
-  private float left, top, w, h, cX, cY;
+  protected float left, top, w, h, cX, cY;
   private boolean isEnabled = true;
   private boolean isDepressed = false;
   private int hash;
