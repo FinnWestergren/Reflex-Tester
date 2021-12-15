@@ -3,8 +3,8 @@ import java.util.TimerTask;
 
 public abstract class RunScene implements Scene {
   
-  private final int _minTime = 10;
-  private final int _maxTime = 60;
+  private final int _minTime = 1000;
+  private final int _maxTime = 6000;
   private final int _maxRuns = 10;
   private PImage logo;
   
